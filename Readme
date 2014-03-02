@@ -1,3 +1,4 @@
 dynamicfibonacci- recursive dynamic programming implementation for fibonacci series.
 knapsackproblem- recursive dynamic programming implementation and naive recursive implementation for knapsack problem with value and weight.
-nrootfinder - recursive implementation of root finding using Newton-Raphson method.
+nrootfinder- recursive implementation of root finding using Newton-Raphson method.
+randomwalk- simple implementation of the random walk simulation.
