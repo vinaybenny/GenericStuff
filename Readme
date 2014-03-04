@@ -1,4 +1,12 @@
-dynamicfibonacci- recursive dynamic programming implementation for fibonacci series.
-knapsackproblem- recursive dynamic programming implementation and naive recursive implementation for knapsack problem with value and weight.
-nrootfinder- recursive implementation of root finding using Newton-Raphson method.
-randomwalk- simple implementation of the random walk simulation.
+This repository is intended to be a collection of Java/Python implementations for well known algorithms.
+
+List of files-
+
+1. dynamicfibonacci- recursive dynamic programming implementation for fibonacci series.
+2. knapsackproblem- recursive dynamic programming implementation and naive recursive implementation 
+   for knapsack problem with value and weight.
+3. nrootfinder- recursive implementation of root finding using Newton-Raphson method.
+4. randomwalk- simple implementation of the random walk simulation.
+5. shortestpathDAG - implements the shortest path algorithm for a directed acyclic graph with 
+   complexity of O(V+E); V->Vertices and E-> Edges. Also has an implementation of the topological sort 
+   algorithm for DAGs, involving a recursive depth-first search method.
