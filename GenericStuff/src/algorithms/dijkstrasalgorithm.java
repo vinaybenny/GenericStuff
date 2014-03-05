@@ -1,0 +1,72 @@
+package algorithms;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+
+
+import algorithms.shortestpathDAG.DirectedGraph;
+import algorithms.shortestpathDAG.Edge;
+import algorithms.shortestpathDAG.Node;
+
+public class dijkstrasalgorithm {
+	
+	// O(V log(V)+ E log(V) ) implementation of Dijkstra's Algorithm. where V -> vertices, E -> Edges.
+	// V log(V) as we use a Priority Queue (extracting the minimum from nodes) V times;
+	// E log(V) as we decrease the node value E times.
+	// A better implementation uses fibonacci heap data structure- refer fastdijkstra method.
+	
+	public static <T> void dijkstra(DirectedGraph<T> dg, Node<T> startingNode, Node<T> endingNode){
+		
+		PriorityQueue<Node<T>> sortednodes = new PriorityQueue<Node<T>>();		
+		List<Node<T>> finishedNodes = new ArrayList<Node<T>>();
+		startingNode.distance = (double)0;
+		sortednodes.addAll(dg.graph);		
+		 
+		while(!sortednodes.isEmpty()){
+			Node<T> nextnode = sortednodes.poll();
+			if(nextnode.node.equals(endingNode.node))
+				break;
+			for(Edge<T> outgoing : nextnode.outgoingEdges){
+				outgoing.endingNode.distance = nextnode.distance + outgoing.weight;
+				outgoing.endingNode.previousnode = nextnode;
+			}
+		}		
+	}
+	
+public static void main(String[] args){
+		
+		shortestpathDAG spd = new shortestpathDAG();
+		Node<String> one = spd.new Node<String>("1");
+		Node<String> two = spd.new Node<String>("2");
+		Node<String> three = spd.new Node<String>("3");
+		Node<String> four = spd.new Node<String>("4");
+		Node<String> five = spd.new Node<String>("5");
+		
+		one.addEdge(three,2.0).addEdge(four,2.0);
+		two.addEdge(four,1.0);
+		three.addEdge(five,6.0);
+		four.addEdge(three,-3.0).addEdge(five, 4.0);		
+		
+		ArrayList<Node<String>> listofNodes = new ArrayList<Node<String>>();
+		listofNodes.add(one);
+		listofNodes.add(two);
+		listofNodes.add(three);
+		listofNodes.add(four);
+		listofNodes.add(five);		
+		
+		DirectedGraph dg = spd.new DirectedGraph(listofNodes);		
+		dijkstra(dg, four, five);
+		System.out.println("Distance of Node 5 from Node 4: "+five.distance);
+		
+		Node n = five;
+		System.out.print("Node "+n.node);
+		while(!n.node.equals(four.node)){
+			System.out.print(" from ");
+			System.out.print("Node "+n.previousnode.node);
+			n= n.previousnode;
+		}
+
+	}
+
+}

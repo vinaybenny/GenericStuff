@@ -20,7 +20,7 @@ public class shortestpathDAG {
 	}
 	
 	// Node of graph, with node indicator, incoming edges, outgoing edges.
-	public class Node<T>{
+	public class Node<T> implements Comparable <Node<T>>{
 		T node;
 		Set<Edge<T>> incomingEdges, outgoingEdges;
 		Double distance;
@@ -40,7 +40,16 @@ public class shortestpathDAG {
 			this.outgoingEdges.add(new Edge<T>(this, node));
 			node.incomingEdges.add(new Edge<T>(this, node));
 			return this;			
-		}
+		}		
+		public int compareTo(Node<T> b){
+			if(this.distance > b.distance)
+				return 1;
+			else if(this.distance == b.distance)
+				return 0;
+			else 
+				return -1;				
+		}		
+		
 	}	
 	
 	// Edges between nodes, with starting node, ending node and weight(can be negative weight).
@@ -103,7 +112,7 @@ public class shortestpathDAG {
 				for(Edge edge :node.outgoingEdges){
 					if(node.distance + edge.weight < edge.endingNode.distance){
 						edge.endingNode.distance = node.distance + edge.weight;
-						edge.endingNode.previousnode = node;											
+						edge.endingNode.previousnode = node;						
 					}
 				}
 			}
