@@ -12,3 +12,5 @@ List of files-
    algorithm for DAGs, involving a recursive depth-first search method.
 6. dijkstrasalgorithm- Two implementations of the Dijkstra's algorithm, using priority queue and the faster 
    fibonacci heap. This code is dependent on shortestpathDAG for the directed graph class.
+7. bellmanford- Implementation of Bellman-Ford shortest path algorithm, with detection of negative cycles.
+   Complexity of O(V*E + E) -> O(Vcubed).
