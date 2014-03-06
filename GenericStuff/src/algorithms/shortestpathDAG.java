@@ -48,7 +48,10 @@ public class shortestpathDAG {
 				return 0;
 			else 
 				return -1;				
-		}		
+		}
+		public Set<Edge<T>> getoutgoingedges(){
+			return this.outgoingEdges;
+		}
 		
 	}	
 	
