@@ -1,0 +1,22 @@
+package algorithms;
+
+import java.util.PriorityQueue;
+
+import algorithms.shortestpathDAG.DirectedGraph;
+import algorithms.shortestpathDAG.Node;
+
+public class dijkstrasalgorithm {
+	
+	public static <T> void dijkstra(DirectedGraph<T> dg){
+		
+		PriorityQueue<Node<T>> sortednodes = new PriorityQueue<Node<T>>(){
+			public int compare(Node<T> a, Node<T> b){
+				if()
+				
+			}
+		};
+		sortednodes.addAll(dg.graph);
+		
+	}
+
+}

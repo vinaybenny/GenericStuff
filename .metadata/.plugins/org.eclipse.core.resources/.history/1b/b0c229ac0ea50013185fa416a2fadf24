@@ -1,0 +1,93 @@
+package algorithms;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import algorithms.shortestpathDAG.DirectedGraph;
+import algorithms.shortestpathDAG.Edge;
+import algorithms.shortestpathDAG.Node;
+
+public class bellmanford {
+	
+	public class NegativeCycleException extends Exception{
+
+		public NegativeCycleException(String string) {
+			// TODO Auto-generated constructor stub
+			System.out.println(string);
+		}
+	}
+	
+	public static <T> void bellfordalg(DirectedGraph<T> dg, Node<T> startingNode, 
+			Set<Edge<T>> edges) throws NegativeCycleException{
+		
+		startingNode.distance = (double)0;
+		
+		// Iterate from 1 to V-1; and analyze every edge in each case. Complexity- O(V*E), V-> Vertices, E-> Edges
+		for(int i=1; i <= dg.graph.size()-1; i++){
+			for(Edge<T> edge : edges){
+				
+				if(edge.endingNode.distance > edge.startingNode.distance + edge.weight){
+					edge.endingNode.distance = edge.startingNode.distance + edge.weight;
+					edge.endingNode.previousnode = edge.startingNode;
+				}				
+			}
+		}
+		
+		// Check for negative cycles to see if any edge can be further relaxed.
+		for(Edge<T> chkedge : edges){
+			if(chkedge.endingNode.distance > chkedge.startingNode.distance + chkedge.weight){
+				bellmanford bf = new bellmanford();
+				throw bf.new NegativeCycleException("The graph has negative cycles in it. Aborting here.");
+				
+			}
+		}
+		
+	}
+	
+	public static void main(String[] args){
+		
+		shortestpathDAG spd = new shortestpathDAG();
+		Node<String> one = spd.new Node<String>("1");
+		Node<String> two = spd.new Node<String>("2");
+		Node<String> three = spd.new Node<String>("3");
+		Node<String> four = spd.new Node<String>("4");
+		Node<String> five = spd.new Node<String>("5");
+		
+		//one.addEdge(three,2.0).addEdge(four,2.0);
+		one.addEdge(four,-2.0);
+		
+		two.addEdge(four,1.0);
+		three.addEdge(five,6.0);
+		three.addEdge(one, 2.0);
+		four.addEdge(three,-3.0).addEdge(five, 4.0);			
+		
+		ArrayList<Node<String>> listofNodes = new ArrayList<Node<String>>();
+		listofNodes.add(one);
+		listofNodes.add(two);
+		listofNodes.add(three);
+		listofNodes.add(four);
+		listofNodes.add(five);
+		
+		Set<Edge<String>> listofEdges = new HashSet<Edge<String>>();
+		listofEdges.addAll(one.getoutgoingedges());
+		listofEdges.addAll(two.getoutgoingedges());
+		listofEdges.addAll(three.getoutgoingedges());
+		listofEdges.addAll(four.getoutgoingedges());
+		listofEdges.addAll(five.getoutgoingedges());
+		
+		DirectedGraph dg = spd.new DirectedGraph(listofNodes);		
+		bellfordalg(dg,four,listofEdges);
+		
+		System.out.println("Distance of Node 5 from Node 4: "+five.distance);
+		Node n = five;
+		System.out.print("Node "+n.node);
+		while(!n.node.equals(four.node)){
+			System.out.print(" from ");
+			System.out.print("Node "+n.previousnode.node);
+			n= n.previousnode;
+		}
+	}
+	
+}

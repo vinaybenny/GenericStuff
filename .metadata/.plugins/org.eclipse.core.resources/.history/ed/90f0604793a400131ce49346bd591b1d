@@ -1,0 +1,171 @@
+package algorithms;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+
+
+public class shortestpathDAG {
+	
+	// Exception class to handle graphs with loops
+	public class DAGLoopException extends Exception{
+
+		public DAGLoopException(String string) {
+			// TODO Auto-generated constructor stub
+			System.out.println(string);
+		}
+		
+	}
+	
+	// Node of graph, with node indicator, incoming edges, outgoing edges.
+	public class Node<T> implements Comparable <Node<T>>{
+		T node;
+		Set<Edge<T>> incomingEdges, outgoingEdges;
+		Double distance;
+		Node<T> previousnode;
+		public Node(T name){
+			this.node = name;
+			this.incomingEdges = new HashSet<Edge<T>>();
+			this.outgoingEdges = new HashSet<Edge<T>>();
+			this.distance = Double.POSITIVE_INFINITY;
+		}
+		public Node<T> addEdge(Node<T> node, Double weight){			
+			this.outgoingEdges.add(new Edge<T>(this, node, weight));
+			node.incomingEdges.add(new Edge<T>(this, node, weight));
+			return this;			
+		}
+		public Node<T> addEdge(Node<T> node){			
+			this.outgoingEdges.add(new Edge<T>(this, node));
+			node.incomingEdges.add(new Edge<T>(this, node));
+			return this;			
+		}		
+		
+	}	
+	
+	// Edges between nodes, with starting node, ending node and weight(can be negative weight).
+	public class Edge<T>{
+		Node<T> startingNode;
+		Node<T> endingNode;
+		Double weight;		
+		public Edge(Node<T> starting, Node<T> ending, Double weight){
+			this.startingNode = starting;
+			this.endingNode = ending;
+			this.weight = weight;
+		}
+		public Edge(Node<T> starting, Node<T> ending){
+			this.startingNode = starting;
+			this.endingNode = ending;
+			this.weight = (double)0;
+		}
+	}
+	
+	// Directed graph wrapper
+	public class DirectedGraph<T>{
+		List<Node<T>> graph = new ArrayList<Node<T>>();
+		public DirectedGraph(ArrayList<Node<T>> nodelist){
+			graph.addAll(nodelist);
+		}
+		
+		//Topological sort for nodes with recursive depth first search. Complexity of the order of nodes+edges- O(N+E)
+		public void topologicalSort(Node<T> node, DirectedGraph<T> dag, List<Node<T>> sorted,
+				Set<Node<T>> visited) throws DAGLoopException{
+			
+			if(visited.contains(node)){
+				if(sorted.contains(node))
+					return;
+				else{
+					throw new DAGLoopException("The graph is not acyclic");
+				}
+					
+			}
+			
+			visited.add(node);
+			for(Edge<T> previousnode : node.incomingEdges)
+				topologicalSort(previousnode.startingNode,dag,sorted,visited);
+			
+			sorted.add(node);				
+			return;			
+		}
+	}
+	
+	// Shortest path algorithm implementation for DAGs - each node touched once- O(N)
+	public static <T> void shortestpath(Node<String> startingnode, Node<String> endingnode, List<Node<String>> sorted){
+		
+		int startrelaxflag = 0;
+		for(Node<String> node : sorted){
+			if(node.node.equals(startingnode.node)){
+				node.distance = (double)0;
+				startrelaxflag = 1;
+			}
+			
+			if(startrelaxflag == 1){
+				for(Edge edge :node.outgoingEdges){
+					if(node.distance + edge.weight < edge.endingNode.distance){
+						edge.endingNode.distance = node.distance + edge.weight;
+						edge.endingNode.previousnode = node;						
+					}
+				}
+			}
+			
+			if (node.node.equals(endingnode.node)){
+				return;
+			}
+		}		
+	}	
+
+
+	public static void main(String[] args){
+		
+		shortestpathDAG spd = new shortestpathDAG();
+		Node<String> one = spd.new Node<String>("1");
+		Node<String> two = spd.new Node<String>("2");
+		Node<String> three = spd.new Node<String>("3");
+		Node<String> four = spd.new Node<String>("4");
+		Node<String> five = spd.new Node<String>("5");
+		
+		one.addEdge(three,2.0).addEdge(four,2.0);
+		two.addEdge(four,1.0);
+		three.addEdge(five,6.0);
+		four.addEdge(three,-3.0).addEdge(five, 4.0);		
+		
+		ArrayList<Node<String>> listofNodes = new ArrayList<Node<String>>();
+		listofNodes.add(one);
+		listofNodes.add(two);
+		listofNodes.add(three);
+		listofNodes.add(four);
+		listofNodes.add(five);		
+		
+		DirectedGraph dag = spd.new DirectedGraph(listofNodes);
+		List<Node<String>> sorted = new ArrayList<Node<String>>();
+		Set<Node<String>> visited = new HashSet<Node<String>>();
+		
+		for(Node n : listofNodes){
+			try {
+				dag.topologicalSort(n, dag, sorted, visited);
+			} catch (DAGLoopException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+		for(Node op: sorted){
+			System.out.println((String)op.node);
+		}
+		
+		shortestpath(four, five, sorted);
+		System.out.println("Distance of Node 5 from Node 4: "+five.distance);
+		
+		Node n = five;
+		System.out.print("Node "+n.node);
+		while(!n.node.equals(four.node)){
+			System.out.print(" from ");
+			System.out.print("Node "+n.previousnode.node);
+			n= n.previousnode;
+		}
+
+	}
+
+}

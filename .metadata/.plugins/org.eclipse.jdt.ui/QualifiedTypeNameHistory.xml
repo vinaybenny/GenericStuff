@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="algorithms.randomwalk.Drunk"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.Plots"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.Data"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.Line"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.Color"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.LineChart"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.GCharts"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.Fills"/>
+<fullyQualifiedTypeName name="com.googlecode.charts4j.LinearGradientFill"/>
+<fullyQualifiedTypeName name="java.util.logging.Logger"/>
+<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="algorithms.shortestpathDAG.DirectedGraph"/>
+<fullyQualifiedTypeName name="algorithms.shortestpathDAG.Node"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="algorithms.shortestpathDAG.Edge"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+</qualifiedTypeNameHistroy>
