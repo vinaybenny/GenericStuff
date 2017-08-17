@@ -1,7 +1,7 @@
-This repository is intended to be a collection of Java/Python implementations for well known algorithms.
+# GenericStuff
+This repository is intended to be a collection of Java/Python based implementations for well known algorithms for learning purposes only. My own implementations, and not intended for public use.
 
-List of files-
-
+## List of files
 1. dynamicfibonacci- recursive dynamic programming implementation for fibonacci series.
 2. knapsackproblem- recursive dynamic programming implementation and naive recursive implementation 
    for knapsack problem with value and weight.
