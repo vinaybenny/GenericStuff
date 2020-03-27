@@ -15,3 +15,8 @@ This repository is intended to be a collection of Java/Python based implementati
    for the directed graph class.
 7. bellmanford- Implementation of Bellman-Ford shortest path algorithm, with detection of negative cycles.
    Complexity of O(V*E + E) -> O(Vcubed).dependent on shortestpathDAG for the directed graph class.
+8. insertion_and_merge_sort- Implementation of Insertion sort, both recursive and non-recursive. The implementation
+	also contains a binary seach based insertion sort. Complexity of O(n^2)
+	There is also an implementation of recursive merge sort in this code, with a complexity of o(n*log(n)).
+9. heap_sort_recursive- Implementation of a Node, Graph and Heap data structures. This is followed by an
+	implementation of Heap sort. Complexity of O(n*log(n)).
